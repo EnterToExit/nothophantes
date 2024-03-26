@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mistral_server:
+    build:
+      context: .
+      dockerfile: Dockerfile_mistral_server
+    ports:
+      - "9001:9001"
+    depends_on:
+      - llama_cpp
+
+  manager:
+    build:
+      context: .
+      dockerfile: Dockerfile_manager
+    ports:
+      - "8000:8000"
+    depends_on:
+      - llama_cpp
+
+  llama_cpp:
+    image: python:3.8
+    command: tail -f /dev/null
+
+  external_service:
+    image: external_service_image:tag
+    ports:
+      - "9000:9000"
