@@ -1,18 +1,13 @@
-import fire
 from llama_cpp import Llama
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import Response, StreamingResponse
-import requests
 import uvicorn
 from pydantic import BaseModel
-from typing import Dict
 
 SYSTEM_PROMPT = "Always make only a summary of the given text. Always answer in russian language."
 app_nlp = FastAPI()
 
 class NlpRequest(BaseModel):
     text: str
-
 
 def get_message_tokens(model, role, content):
     content = f"{role}\n{content}\n</s>"
@@ -54,7 +49,7 @@ def interact(
     message_tokens = get_message_tokens(model=model, role="user", content=user_message)
     role_tokens = model.tokenize("bot\n".encode("utf-8"), special=True)
     tokens += message_tokens + role_tokens
-    full_prompt = model.detokenize(tokens)
+    # full_prompt = model.detokenize(tokens)
     generator = model.generate(
         tokens,
         top_k=top_k,
@@ -71,11 +66,10 @@ def interact(
         output += token_str
     return(output)
 
-
 @app_nlp.post("/nlp")
 async def nlp(request: NlpRequest):
     try:
-        output = fire.Fire(interact(request.text))
+        output = interact(request.text)
         return output
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
