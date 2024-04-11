@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  postgres_nothophantes:
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=Passw0rd
+    volumes:
+      - ./init/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  pgadmin_nothophantes:
+    image: dpage/pgadmin4:8
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=root@nigge.rs
+      - PGADMIN_DEFAULT_PASSWORD=Passw0rd
+    ports:
+      - "80:80"

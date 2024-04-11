@@ -28,8 +28,11 @@
                                 <div class="mb-3"><input class="form-control" type="text" name="login" placeholder="Login"></div>
                                 <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
                                 <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Sign up</button></div>
-                                <p class="text-muted">Already have an account?&nbsp;<a href="{% url 'login' %}">Log in</a></p>
                             </form>
+                            {% if error != '' %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endif %}
+                            <p class="text-muted">Already have an account?&nbsp;<a href="{% url 'login' %}">Log in</a></p>
                         </div>
                     </div>
                 </div>

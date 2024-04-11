@@ -1,2 +1,3 @@
 ﻿*.gguf
 .djangoVenv
+__pycache__
