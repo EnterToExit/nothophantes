@@ -1,3 +1,4 @@
 ﻿*.gguf
 .djangoVenv
 __pycache__
+.idea
